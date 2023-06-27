@@ -1,10 +1,7 @@
-from re import T
-from string import ascii_letters
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn import preprocessing
 
 def is_overweight(kg,meters):
     bmi = kg/(meters*meters)
@@ -46,20 +43,11 @@ for g in cholesterol:
     else:
         new_cholesterol.append(g)
 df['cholesterol'] = new_cholesterol
- 
-print(list(df.columns))
 
-# apply normalization techniques
 for column in df.columns:
     df[column] = (df[column] - df[column].min()) / (df[column].max() - df[column].min()) 
 
 #df = df.round(1)
-indexAge = df[ (df['ap_lo'] <= df['ap_hi']) | 
-              (df['height'] <= df['height'].quantile(0.025)) |
-              (df['height'] > df['height'].quantile(0.975)) |
-              (df['weight'] <= df['weight'].quantile(0.025)) |
-              (df['weight'] > df['weight'].quantile(0.975))].index
-df.drop(indexAge , inplace=True)
 
 # Draw Categorical Plot
 def draw_cat_plot():
@@ -67,22 +55,9 @@ def draw_cat_plot():
     # from 'cholesterol', 'gluc', 'smoke', 'alco', 'active', and 'overweight'.
     #print(list(df.columns))
     df_cat = pd.melt(df, value_vars=["active", "alco", "cholesterol", "gluc", "overweight", "smoke"], id_vars="cardio")
-
-    print(df_cat)
-    # Group and reformat the data to split it by 'cardio'. Show the counts of each feature. You will have to rename one of the columns for the catplot to work correctly.
-    #df_cat = None
-    
-
-    # Draw the catplot with 'sns.catplot()'
     fig, ax = plt.subplots()
     fig = sns.catplot(data=df_cat, kind="count", x="variable", hue="value", col="cardio", ax=ax)
     fig.set_axis_labels("variable","totals")
-    #return
-    # Get the figure for the output
-    #fig = cat_plot.get_figure()
-    
-
-    # Do not modify the next two lines
     fig.savefig('catplot.png')
     return fig
 
@@ -90,6 +65,12 @@ def draw_cat_plot():
 # Draw Heat Map
 def draw_heat_map():
     # Clean the data
+    indexAge = df[ (df['ap_lo'] <= df['ap_hi']) | 
+              (df['height'] <= df['height'].quantile(0.025)) |
+              (df['height'] > df['height'].quantile(0.975)) |
+              (df['weight'] <= df['weight'].quantile(0.025)) |
+              (df['weight'] > df['weight'].quantile(0.975))].index
+    df.drop(indexAge , inplace=True)
     d = pd.DataFrame(data=df,
                  columns=list(df.columns))
 
