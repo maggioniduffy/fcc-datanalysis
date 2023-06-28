@@ -12,15 +12,12 @@ def draw_plot():
 
     # Create first line of best fit
     x = df['Year']
-    print(x)
-
-    # Create second line of best fit
     y = df['CSIRO Adjusted Sea Level']
-
     res = linregress(x, y)
     x_plot_1= np.arange(x[0],2050)
     plt.plot(x_plot_1, res.intercept + res.slope*x_plot_1,label='Normal')
     
+    # Create second line of best fit
     dfaux = df[df['Year'] >= 2000]
     xaux = dfaux['Year']
     yaux = dfaux['CSIRO Adjusted Sea Level']

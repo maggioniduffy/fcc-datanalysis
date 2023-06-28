@@ -53,11 +53,6 @@ years_map = {
     2019: 3
 }
 
-c = ['red', 'yellow', 'black', 'blue', 'orange', 'green', 
-     'pink', 'gray','brown','magenta','purple','cyan', 'red', 'yellow', 'black', 'blue', 'orange', 'green', 
-     'pink', 'gray','brown','magenta','purple','cyan', 'red', 'yellow', 'black', 'blue', 'orange', 'green', 
-     'pink', 'gray','brown','magenta','purple','cyan', 'red', 'yellow', 'black', 'blue', 'orange', 'green', 
-     'pink', 'gray','brown','magenta','purple','cyan']
 
 def draw_bar_plot():
     # Copy and modify data for monthly bar plot
@@ -140,9 +135,7 @@ def draw_box_plot():
     sns.boxplot(data=df_2,x='month',y='value',ax=axs[1]).set(title='Month-wise Box Plot (Seasonality)',xlabel='Months', ylabel='Average Page Views')
     
     plt.show()
-
-
-
+    
     # Save image and return fig (don't change this part)
     fig.savefig('box_plot.png')
     return fig
